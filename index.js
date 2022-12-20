@@ -26,17 +26,18 @@ connect
     console.log("Welcome to app_menu");
     let menu_do_dia = require("./Controllers/menu_do_dia");
     app.use("/pratos", async (req, res, next) => {
-      const login = req.header("Authorization").split(" ")[1];
-      const plain = Buffer.from(login, "base64").toString("utf8");
-      const passCL = crypt
-        .createHash("sha256")
-        .update(plain.split(":")[1])
-        .digest("hex");
-      const userDB = await users.findOne({ user: plain.split(":")[0] });
-      if (userDB != null)
-        if (userDB.pass == passCL) next();
-        else res.status(401).send("ERRO PASS: " + req.header("Authorization"));
-      else res.status(401).send("ERRO USER: " + req.header("Authorization"));
+      // const login = req.header("Authorization").split(" ")[1];
+      // const plain = Buffer.from(login, "base64").toString("utf8");
+      // const passCL = crypt
+      //   .createHash("sha256")
+      //   .update(plain.split(":")[1])
+      //   .digest("hex");
+      // const userDB = await users.findOne({ user: plain.split(":")[0] });
+      // if (userDB != null)
+      //   if (userDB.pass == passCL) next();
+      //   else res.status(401).send("ERRO PASS: " + req.header("Authorization"));
+      // else res.status(401).send("ERRO USER: " + req.header("Authorization"));
+      next()
     });
     app.use("/pratos", menu_do_dia);
     app.listen(port, () => console.log(`Listening on port ${port}`));
